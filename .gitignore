@@ -4,6 +4,7 @@ obj/
 .codex/
 checks/
 *.md
+!README.md
 *.pdb
 *.user
 *.suo
