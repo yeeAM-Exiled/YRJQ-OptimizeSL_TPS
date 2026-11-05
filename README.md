@@ -42,3 +42,19 @@ If some of your plugins must perform **periodic full-map dropped-item scans** or
 If your server plugins use Fog effects with IDs >35, this will cause them to stop working.
 
 ⚠️ Please, absolutely do not attempt cross-version compatibility while using this plugin. **In compatibility testing on 14.2.0, cross-version compatibility was found to cause the server to enter an infinite loop of repeated calculations and freeze.** If you need to use it on nostalgia/legacy servers or similar, you must use Opus or GPT or something to complete compatibility work before using it!!!
+
+## 如果星河梦影想要使用该插件则必须承认以下事实
+
+**我个人不会接受星河梦影服务器在不接受以下指控的情况下使用该插件**
+
+### 1.星河梦影管理组严重失职且神权关系户严重
+
+### 2.星河梦影管理组成员"丁"DDOS攻击其他服务器的历史违反CSG6.4.
+
+### 3.星河梦影管理组成员"XiZhiDe"分发NorthwoodStudiosPatreon支持者专属内容并错误地暗示与NorthwoodStudios其工作人员或其合作伙伴存在特殊关系（CSG6.8.与6.9.）
+
+### 4.星河梦影不尊重启用DNT（Do Not Track）的玩家违规存储数据且未经授权
+
+### 5.星河梦影违反CSG3.3.违规授权进服送管理
+
+### 6.星河梦影违反CSG3.1.售卖无限接近owner的权限导致2 player owner（原P2W）
