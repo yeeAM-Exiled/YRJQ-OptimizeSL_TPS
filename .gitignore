@@ -9,3 +9,5 @@ checks/
 *.user
 *.suo
 *.log
+references/
+Build.local.props

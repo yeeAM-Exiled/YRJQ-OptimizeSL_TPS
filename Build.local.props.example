@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- Copy this file to Build.local.props and point to your SL 14.2.9 server. -->
+    <GameManaged>C:/path/to/SCP Secret Laboratory Dedicated Server/SCPSL_Data/Managed</GameManaged>
+  </PropertyGroup>
+</Project>

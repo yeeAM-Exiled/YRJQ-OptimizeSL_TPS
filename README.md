@@ -16,6 +16,24 @@ Enter `optimizetps` in the console or RA to view status.
 
 Results depend on the machine and load. More detailed information is in the [usage instructions](使用说明.txt).
 
+## Build
+
+All plugin code is in `YRJQ-OptimizeSL_TPS.cs`. Open the `.sln` in Visual Studio 2022, or use .NET SDK 8+:
+
+```sh
+dotnet build YRJQ-OptimizeSL_TPS.sln -c Release -p:GameManaged="/path/to/server/SCPSL_Data/Managed"
+```
+
+On Windows you can also run `powershell -ExecutionPolicy Bypass -File build.ps1 -ServerPath "C:\path\to\server"`.
+
+Use the **SL 14.2.9** dedicated server files (Steam app **996560**). `GameManaged` is its `SCPSL_Data/Managed` folder, containing `Assembly-CSharp.dll`, `Assembly-CSharp-firstpass.dll`, `LabApi.dll` (1.1.7), `Mirror.dll`, `CommandSystem.Core.dll`, `UnityEngine.CoreModule.dll` and `UnityEngine.PhysicsModule.dll`. These come with the game server; they aren't included here.
+
+Harmony 2.2.2 and the .NET 4.8 reference assemblies restore from NuGet. No EXILED installation or local LabAPI plugin folder is needed to compile.
+
+For Visual Studio, copy `Build.local.props.example` to `Build.local.props` and set the path there. You can also set `SL_REFERENCES` to the Managed folder, set `SCPSL_SERVER` to the server root, or put the seven DLLs listed above in `references/`.
+
+Output: `bin/Release/net48/YRJQ-OptimizeSL_TPS.dll`. Install that DLL only; don't copy the game references into the plugins folder.
+
 ## Must Know
 This plugin can optimize bugs and issues where heavy plugins repeatedly compute during idle frames, but **if a plugin originally includes idle-TPS computation, this may increase unrelated computation**. Be sure to turn off TPS detection and dynamic adjustment.
 

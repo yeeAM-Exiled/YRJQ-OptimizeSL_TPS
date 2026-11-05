@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="Build.local.props" Condition="Exists('Build.local.props')" />
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>latest</LangVersion>
@@ -7,12 +8,18 @@
     <Version>1.0.0</Version>
     <Authors>聿日笺秋</Authors>
     <DebugType>none</DebugType>
+    <Deterministic>true</Deterministic>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <GameManaged Condition="'$(GameManaged)' == ''">D:/steam/steamapps/common/SCP Secret Laboratory Dedicated Server/SCPSL_Data/Managed</GameManaged>
-    <LabDependencies Condition="'$(LabDependencies)' == ''">$(APPDATA)/SCP Secret Laboratory/LabAPI/dependencies/global</LabDependencies>
+    <GameManaged Condition="'$(GameManaged)' == '' and '$(SL_REFERENCES)' != ''">$(SL_REFERENCES)</GameManaged>
+    <GameManaged Condition="'$(GameManaged)' == '' and '$(SCPSL_SERVER)' != ''">$(SCPSL_SERVER)/SCPSL_Data/Managed</GameManaged>
+    <GameManaged Condition="'$(GameManaged)' == ''">$(MSBuildProjectDirectory)/references</GameManaged>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="YRJQ-OptimizeSL_TPS.cs" />
+    <PackageReference Include="Lib.Harmony" Version="2.2.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net48" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Assembly-CSharp" HintPath="$(GameManaged)/Assembly-CSharp.dll" Private="false" />
     <Reference Include="Assembly-CSharp-firstpass" HintPath="$(GameManaged)/Assembly-CSharp-firstpass.dll" Private="false" />
     <Reference Include="LabApi" HintPath="$(GameManaged)/LabApi.dll" Private="false" />
@@ -20,6 +27,12 @@
     <Reference Include="UnityEngine.CoreModule" HintPath="$(GameManaged)/UnityEngine.CoreModule.dll" Private="false" />
     <Reference Include="UnityEngine.PhysicsModule" HintPath="$(GameManaged)/UnityEngine.PhysicsModule.dll" Private="false" />
     <Reference Include="CommandSystem.Core" HintPath="$(GameManaged)/CommandSystem.Core.dll" Private="false" />
-    <Reference Include="0Harmony" HintPath="$(LabDependencies)/0Harmony.dll" Private="false" />
   </ItemGroup>
+  <ItemGroup>
+    <RequiredGameReference Include="Assembly-CSharp.dll;Assembly-CSharp-firstpass.dll;LabApi.dll;Mirror.dll;UnityEngine.CoreModule.dll;UnityEngine.PhysicsModule.dll;CommandSystem.Core.dll" />
+  </ItemGroup>
+  <Target Name="ValidateGameReferences" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(GameManaged)/%(RequiredGameReference.Identity)')"
+           Text="Missing $(GameManaged)/%(RequiredGameReference.Identity). Use the SL 14.2.9 server Managed folder: dotnet build YRJQ-OptimizeSL_TPS.sln -c Release -p:GameManaged=&quot;PATH/SCPSL_Data/Managed&quot;. See README.md or Build.local.props.example." />
+  </Target>
 </Project>

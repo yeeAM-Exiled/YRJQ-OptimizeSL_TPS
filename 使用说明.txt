@@ -24,5 +24,10 @@ Waiting for players事件触发后，输出四行YRJQ-OptimizeSL字符边框。
 地图切换和物品销毁自动清理引用；禁用插件恢复原版回调与插件接管前的TPS上限。
 不缓存玩家或角色，因此角色切换不会遗留角色状态。
 
-编译：dotnet build YRJQ-OptimizeSL_TPS.csproj -c Release -p:GameManaged="服务端/SCPSL_Data/Managed" -p:LabDependencies="LabAPI/dependencies/global"
+编译：安装.NET SDK 8或更新版本，执行 dotnet build YRJQ-OptimizeSL_TPS.sln -c Release -p:GameManaged="服务端/SCPSL_Data/Managed"
+Windows也可以执行 powershell -ExecutionPolicy Bypass -File build.ps1 -ServerPath "服务端路径"。
+Harmony 2.2.2与.NET 4.8编译引用由NuGet自动还原，编译不需要安装EXILED。
+Visual Studio使用者可复制Build.local.props.example为Build.local.props，填写GameManaged后打开.sln编译。
+也可把7个游戏引用放在references目录，具体文件见README。引用文件需来自SL 14.2.9服务端（Steam应用996560）。
+输出：bin/Release/net48/YRJQ-OptimizeSL_TPS.dll，只安装这个插件DLL即可。
 依赖游戏程序集由服务端提供，仓库不分发游戏DLL。
