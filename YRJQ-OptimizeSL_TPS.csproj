@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>YRJQ-OptimizeSL_TPS</AssemblyName>
+    <RootNamespace>YRJQ.OptimizeSL</RootNamespace>
+    <Version>1.0.0</Version>
+    <Authors>聿日笺秋</Authors>
+    <DebugType>none</DebugType>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GameManaged Condition="'$(GameManaged)' == ''">D:/steam/steamapps/common/SCP Secret Laboratory Dedicated Server/SCPSL_Data/Managed</GameManaged>
+    <LabDependencies Condition="'$(LabDependencies)' == ''">$(APPDATA)/SCP Secret Laboratory/LabAPI/dependencies/global</LabDependencies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="YRJQ-OptimizeSL_TPS.cs" />
+    <Reference Include="Assembly-CSharp" HintPath="$(GameManaged)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="Assembly-CSharp-firstpass" HintPath="$(GameManaged)/Assembly-CSharp-firstpass.dll" Private="false" />
+    <Reference Include="LabApi" HintPath="$(GameManaged)/LabApi.dll" Private="false" />
+    <Reference Include="Mirror" HintPath="$(GameManaged)/Mirror.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(GameManaged)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(GameManaged)/UnityEngine.PhysicsModule.dll" Private="false" />
+    <Reference Include="CommandSystem.Core" HintPath="$(GameManaged)/CommandSystem.Core.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(LabDependencies)/0Harmony.dll" Private="false" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,16 @@
+# LabAPI/configs/7777/YRJQ-OptimizeSL_TPS/config.yml
+is_enabled: true
+dynamic_tps: true
+maximum_tps: 60
+minimum_tps: 10
+overload_seconds: 8
+stable_seconds: 30
+sample_seconds: 1
+tps_tolerance: 2
+bounce_tolerance_seconds: 2
+warmup_seconds: 10
+batch_pickup_updates: true
+pickup_checks_per_second: 20
+cache_pickup_queries: true
+skip_server_visuals: true
+log_tps_changes: true

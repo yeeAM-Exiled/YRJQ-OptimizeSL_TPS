@@ -1,0 +1,28 @@
+YRJQ-OptimizeSL_TPS 1.0.0
+适用：SCP: Secret Laboratory 14.2.9，LabAPI 1.1.7，.NET Framework 4.8。
+独立LabAPI插件；需要LabAPI依赖目录中有0Harmony 2.2.2。
+
+安装：将YRJQ-OptimizeSL_TPS.dll放入LabAPI/plugins/7777，然后完整启动或重启服务端。
+配置：LabAPI/configs/7777/YRJQ-OptimizeSL_TPS/config.yml。
+状态命令：服务端控制台或RA执行 optimizetps（别名 yrjqtps）。
+Waiting for players事件触发后，输出四行YRJQ-OptimizeSL字符边框。
+
+动态TPS：默认上限60；每1秒统计实际Update数，持续8秒过载后取这段时间最低窗口TPS向下取整作为新上限，默认最低10。
+新上限稳定30秒后增加5，直至maximum_tps。允许2秒短暂波动；常规采样误差容忍2 TPS。
+生成地图、开局、退出空服休眠后有10秒采样宽限。回合重启恢复配置上限；保留原版空服休眠。
+降上限用于平滑负载，不代表凭空增加服务器运算能力。
+
+物品优化：生命周期维护有效实例缓存，只在插件启用时进行一次初始化场景查询，替换原版cleanup items的场景查找。
+没有定时全场景扫描；不会删除物品、重用已销毁网络对象或因序列号为0而合并不同物品。
+原版掉落物网络状态检查集中到20Hz，复用原版UpdateServer方法及0.25秒移动同步冷却。
+这不是物理模拟降频；碰撞、投掷、伤害、玩家同步与角色逻辑保持原版运行。
+物品状态检查最多延后一轮检查周期（默认约50毫秒，加上服务器实际帧耗时）。
+可设置batch_pickup_updates: false恢复原版每帧检查。
+
+专用服务器且无本地客户端时跳过雾效、分区后处理和SRP渲染入口；游戏客户端画面与原版灯光网络状态不变。
+部分视觉代码已被原版专用服务器剔除时，对应优化自然不会带来额外收益。
+地图切换和物品销毁自动清理引用；禁用插件恢复原版回调与插件接管前的TPS上限。
+不缓存玩家或角色，因此角色切换不会遗留角色状态。
+
+编译：dotnet build YRJQ-OptimizeSL_TPS.csproj -c Release -p:GameManaged="服务端/SCPSL_Data/Managed" -p:LabDependencies="LabAPI/dependencies/global"
+依赖游戏程序集由服务端提供，仓库不分发游戏DLL。
