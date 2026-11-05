@@ -1,25 +1,26 @@
 # YRJQ-OptimizeSL_TPS
-## 给SCP:SL服务端用的LabAPI优化插件
-优化包含：缓存掉落物实例，合并物品网络状态检查，跳过服务端用不上的雾效（NW的妙妙遗留代码）、后处理与动态TPS调整（避免客户端视角丢帧与部分大体量插件在空帧反复运算）
+## A LabAPI optimization plugin for SCP:SL servers
 
-默认TPS上限60，持续掉TPS8秒降到这段时间的最低采样值，稳定30秒往上加5，短暂波动忽略
+Optimizations include: caching dropped-item instances, merging item network state checks, skipping fog effects not needed by the server (NW's quirky legacy code), post-processing, and dynamic TPS adjustment (to avoid client-side frame drops and repeated computation by some heavy plugins during idle frames).
 
-以上内容可配置更改
+The default TPS cap is 60. If TPS keeps dropping for 8 seconds, it lowers to the lowest sampled value during that period. If stable for 30 seconds, it increases by 5. Brief fluctuations are ignored.
 
-安装[Releases](https://github.com/yeeAM-Exiled/YRJQ-OptimizeSL_TPS/releases)下 DLL，丢进 `LabAPI/plugins/你的端口/`，重启服务端
+The above can be changed via configuration.
 
-环境：SL 14.2.9、LabAPI 1.1.7，依赖目录要有 `0Harmony.dll`（2.2.2）
-配置在 `LabAPI/configs/你的端口/YRJQ-OptimizeSL_TPS/config.yml`，主要改 `maximum_tps` 就行，其他参数看 [配置示例](config.example.yml)
+Install the DLL from [Releases](https://github.com/yeeAM-Exiled/YRJQ-OptimizeSL_TPS/releases), drop it into `LabAPI/plugins/your_port/`, and restart the server.
 
-控制台或 RA 输 `optimizetps` 看状态
+Environment: SL 14.2.9, LabAPI 1.1.7. The dependency directory must contain `0Harmony.dll` (2.2.2).
+The config is at `LabAPI/configs/your_port/YRJQ-OptimizeSL_TPS/config.yml`. You mainly just need to change `maximum_tps`; for other parameters, see the [config example](config.example.yml).
 
-效果看机器和负载。更细的东西放在 [使用说明](使用说明.txt) 
+Enter `optimizetps` in the console or RA to view status.
 
-## 务必须知
-该插件可优化大体量插件在空帧反复运算的bug与问题等，但是**如果该插件原包含空TPS运算，则可能会导致无关运算量增大**请务必关掉TPS检测与动态调整
+Results depend on the machine and load. More detailed information is in the [usage instructions](使用说明.txt).
 
-如果你有的插件不得不**周期全场掉落物扫描**或**避免复用有效物品实例**会导致在重新缓存掉落物实例时导致**顺时的卡顿**
+## Must Know
+This plugin can optimize bugs and issues where heavy plugins repeatedly compute during idle frames, but **if a plugin originally includes idle-TPS computation, this may increase unrelated computation**. Be sure to turn off TPS detection and dynamic adjustment.
 
-如果你的服务器插件内包含使用了>35号的雾效（Fog）会导致他们失效
+If some of your plugins must perform **periodic full-map dropped-item scans** or **avoid reusing valid item instances**, this will cause **momentary stutters** when dropped-item instances are re-cached.
 
-⚠️请务必务必不要在使用该插件时尝试跨版本兼容**在14.2.0的兼容测试中发现跨版本兼容会导致服务器死循环反复计算卡死**如果你有在怀旧等服务器的使用需求务必务必使用Opus或GPT什么的兼容完后再使用！！！
+If your server plugins use Fog effects with IDs >35, this will cause them to stop working.
+
+⚠️ Please, absolutely do not attempt cross-version compatibility while using this plugin. **In compatibility testing on 14.2.0, cross-version compatibility was found to cause the server to enter an infinite loop of repeated calculations and freeze.** If you need to use it on nostalgia/legacy servers or similar, you must use Opus or GPT or something to complete compatibility work before using it!!!
